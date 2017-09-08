@@ -2,9 +2,10 @@
 
 Yleisiä linkkejä:
 
-* [Linkki sovellukseeni](https://www.cs.helsinki.fi)
-* [Linkki dokumentaatiooni](https://www.github.com)
+* [Linkki sovellukseeni](https://saklindq.users.cs.helsinki.fi/tsoha/)
+* [Linkki dokumentaatiooni](Tsoha-Bootstrap/doc/dokumentaatio.pdf)
 
 ## Työn aihe
 
-Laita tähän aihekuvaus tai [linkki valmiiseen aiheeseen](http://advancedkittenry.github.io/suunnittelu_ja_tyoymparisto/aiheet/Pokemon-kanta.html) 
+Termituki on sovellus, jolla yliopistolaiset pystyvät seuraamaan mihin kursseihin ja aiheisiin eri termit kuuluvat. Etenkin käpistelyssä termit ja lyhenteet menevät helposti sekaisin, joten uskon sovelluksella olevan jopa oikeita aktiivisia käyttäjiä, mikäli käyttöliittymän saa toimivaksi ja ohjelman jaettua sopivalla tavalla. Käyttäjät pystyvät lisäämään kursseja, lisäämään kursseille aiheita, sekä lisäämään termejä. Termit liittyvät kursseihin sekä aiheisiin.
+
