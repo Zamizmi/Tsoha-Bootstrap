@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+{% for termi in termit %}
+<div class="alert alert-success">
+	{{message}}
+</div>
+<h1>{{termi.nimi}}</h1>
+<ul>
+	<li><strong>Englanniksi:</strong> {{termi.englanniksi}}</li>
+	<br>
+	<li><strong>Kuvaus:</strong> {{termi.kuvaus}}</li>
+</ul>
+<br>
+<p>
+	<button class="btn btn-danger">Poista</button> 
+	<a href="{{base_path}}/termi/{{termi.id}}/edit" class="btn btn-default">Muokkaa</a>
+</p>
+{% endfor %}
+{% endblock %}

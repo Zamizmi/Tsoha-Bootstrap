@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Lisää Uusi Kurssi</h1>
+
+<form method="post" action="{{base_path}}/kurssi">
+  <div class="form-group">
+    <label>Kurssin Nimi</label>
+    <input type="text" name="nimi" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <label>Kurssitunnus</label>
+    <input type="text" name="kurssitunnus" class="form-control"></textarea>
+  </div>
+
+  <div class="form-group">
+    <label>Kuvaus</label>
+    <input type="text" name="kuvaus" class="form-control"></textarea>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Lisää</button>
+  </div>
+</form>
+{% endblock %}

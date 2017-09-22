@@ -9,6 +9,7 @@ CREATE TABLE Kurssi(
 CREATE TABLE Aihe(
 	id SERIAL PRIMARY KEY,
 	nimi varchar(50) NOT NULL,
+	englanniksi varchar(50) NOT NULL,
 	kuvaus varchar(500) NOT NULL
 );
 

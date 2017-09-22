@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Aiheet</h1>
+
+<p>
+  <a href="{{base_path}}/aihe/new" class="btn btn-success">Lisää Aihe</a>
+</p>
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Aihe</th>
+      <th>Kurssien lukumäärä</th>
+      <th>Termien lukumäärä</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for aihe in aiheet %}
+    <tr>
+      <td><a href="{{base_path}}/aihe/{{aihe.id}}">{{aihe.nimi}}</a></td>
+      <!-- TODO Laita lkm tietokannasta -->
+      <td>1</td>
+      <!-- TODO Laita lkm tietokannasta -->
+      <td>1</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

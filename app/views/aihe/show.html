@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+{% for aihe in aiheet %}
+<div class="alert alert-success">
+	{{message}}
+</div>
+<h1>{{aihe.nimi}}</h1>
+<ul>
+	<li><strong>Kuvaus:</strong> {{aihe.kuvaus}}</li>
+	<!--<strong>Aiheiden Lukumäärä:</strong> {{kurssiaihe}}</li> -->
+	<!--<strong>Termien Lukumäärä:</strong> {{kurssiaihe}}</li> -->
+</ul>
+<br>
+<p>
+	<button class="btn btn-danger">Poista</button> 
+	<a href="{{base_path}}/aihe/{{aihe.id}}/edit" class="btn btn-default">Muokkaa</a>
+</p>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+{% for kurssi in kurssit %}
+<h1>Muokkaa Kurssia {{kurssi.nimi}}</h1>
+
+<form>
+  <div class="form-group">
+    <label>Nimi</label>
+    <input type="text" class="form-control" value="{{kurssi.nimi}}">
+  </div>
+  <div class="form-group">
+    <label>Kuvaus</label>
+    <textarea class="form-control">{{kurssi.kuvaus}}</textarea>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Tallenna Muutokset</button>
+  </div>
+</form>
+{% endfor %}
+{% endblock %}

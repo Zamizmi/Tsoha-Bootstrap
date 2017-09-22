@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+{% for kurssi in kurssit %}
+<div class="alert alert-success">
+	{{message}}
+</div>
+<h1>{{kurssi.nimi}}</h1>
+<ul>
+	<li><strong>Kurssitunnus:</strong> {{kurssi.kurssitunnus}}</li>
+	<br>
+	<li><strong>Kuvaus:</strong> {{kurssi.kuvaus}}</li>
+	<!--<strong>Aiheiden Lukumäärä:</strong> {{kurssiaihe}}</li> -->
+	<!--<strong>Termien Lukumäärä:</strong> {{kurssiaihe}}</li> -->
+</ul>
+<br>
+<p>
+	<button class="btn btn-danger">Poista</button> 
+	<a href="{{base_path}}/kurssi/{{kurssi.id}}/edit" class="btn btn-default">Muokkaa</a>
+</p>
+{% endfor %}
+{% endblock %}
