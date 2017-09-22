@@ -3,7 +3,7 @@
 Yleisiä linkkejä:
 
 * [Linkki sovellukseeni](https://saklindq.users.cs.helsinki.fi/tsoha/)
-* [Linkki dokumentaatiooni](Tsoha-Bootstrap/doc/dokumentaatio.pdf)
+* [Linkki dokumentaatiooni](https://github.com/Zamizmi/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf)
 
 * [Linkki Typographiaan](https://getbootstrap.com/docs/3.3/css/#type)
 * [Linkki Tauluihin](https://getbootstrap.com/docs/3.3/css/#tables)
