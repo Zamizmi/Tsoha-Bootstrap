@@ -5,6 +5,7 @@ class Kurssi extends BaseModel{
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
+		$this->validators = array('validate_nimi','validate_kurssitunnus', 'validate_kuvaus');
 	}
 
 	public static function all(){
@@ -20,7 +21,6 @@ class Kurssi extends BaseModel{
 				'kuvaus' => $row['kuvaus']
 			));
 		}
-
 		return $kurssit;
 	}
 
@@ -28,20 +28,18 @@ class Kurssi extends BaseModel{
 		$query = DB::connection()->prepare('SELECT * FROM Kurssi WHERE id = :id LIMIT 1');
 		$query->execute(array('id' => $id));
 		$row = $query->fetch();
-		$kurssit = array();
+		$kurssi = array();
 
 
 		if($row){
-			$kurssit[] = new Kurssi(array(
+			$kurssi = new Kurssi(array(
 				'id' => $row['id'],
 				'nimi' => $row['nimi'],
 				'kurssitunnus' => $row['kurssitunnus'],
 				'kuvaus' => $row['kuvaus']
 			));
-
-			return $kurssit;
+			return $kurssi;
 		}
-
 		return null;
 	}
 
@@ -51,4 +49,28 @@ class Kurssi extends BaseModel{
 		$row = $query->fetch();
 		$this->id = $row['id'];
 	}
+
+	public function update(){
+		$query = DB::connection()->prepare('UPDATE Kurssi SET nimi = :nimi, kurssitunnus = :kurssitunnus, kuvaus = :kuvaus WHERE id = :id');
+		$query -> execute(array('id' => $this->id, 'nimi' => $this->nimi, 'kurssitunnus' => $this->kurssitunnus, 'kuvaus' => $this->kuvaus));
+	}
+
+	public function destroy() {
+		$query = DB::connection()->prepare('DELETE FROM Kurssi WHERE id =:id');
+		$query -> execute(array('id' => $this->id));
+	}
+
+	public function validate_nimi() {
+		return parent::validate_string_length('Nimi', $this->nimi, 3, 50);
+	}
+
+	public function validate_kurssitunnus() {
+		return parent::validate_string_length('Kurssitunnus', $this->kurssitunnus, 3, 50);
+	}
+
+	public function validate_kuvaus() {
+		return parent::validate_string_length('Kuvaus', $this->kuvaus, 3, 500);
+	}
+
+
 }

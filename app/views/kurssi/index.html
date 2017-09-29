@@ -1,7 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Kaikki Kurssit</h1>
+{% if message %}
+<div class="alert alert-success">
+  <ul>
+    {% for message in message %}
+    <li>{{message}}</li>
+    <br>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
 
+{% if errors %}
+<div class="alert alert-danger">
+  <ul>
+    {% for error in errors %}
+    <li>{{error}}</li>
+    <br>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
 <p>
   <a href="{{base_path}}/kurssi/new" class="btn btn-success">Lisää Kurssi</a>
 </p>

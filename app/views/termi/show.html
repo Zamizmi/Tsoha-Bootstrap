@@ -4,6 +4,7 @@
 <div class="alert alert-success">
 	{{message}}
 </div>
+{% import "macros/forms.html" as forms %}
 <h1>{{termi.nimi}}</h1>
 <ul>
 	<li><strong>Englanniksi:</strong> {{termi.englanniksi}}</li>
@@ -11,8 +12,10 @@
 	<li><strong>Kuvaus:</strong> {{termi.kuvaus}}</li>
 </ul>
 <br>
+{{forms.destroy_button("#{base_path}/termi/#{termi.id}/destroy")}}
+<br>
+<br>
 <p>
-	<button class="btn btn-danger">Poista</button> 
 	<a href="{{base_path}}/termi/{{termi.id}}/edit" class="btn btn-default">Muokkaa</a>
 </p>
 {% endfor %}

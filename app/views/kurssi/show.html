@@ -1,9 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-{% for kurssi in kurssit %}
-<div class="alert alert-success">
-	{{message}}
+{% if errors %}
+<div class="alert alert-danger">
+	<ul>
+		{% for error in errors %}
+		<li>{{error}}</li>
+		<br>
+		{% endfor %}
+	</ul>
 </div>
+{% endif %}
+{% import "macros/forms.html" as forms %}
 <h1>{{kurssi.nimi}}</h1>
 <ul>
 	<li><strong>Kurssitunnus:</strong> {{kurssi.kurssitunnus}}</li>
@@ -13,9 +20,10 @@
 	<!--<strong>Termien Lukumäärä:</strong> {{kurssiaihe}}</li> -->
 </ul>
 <br>
+{{forms.destroy_button("#{base_path}/kurssi/#{kurssi.id}/destroy")}}
+<br>
+<br>
 <p>
-	<button class="btn btn-danger">Poista</button> 
-	<a href="{{base_path}}/kurssi/{{kurssi.id}}/edit" class="btn btn-default">Muokkaa</a>
+	<a href="{{base_path}}/kurssi/{{kurssi.id}}/edit" class="btn btn-info">Muokkaa</a>
 </p>
-{% endfor %}
 {% endblock %}

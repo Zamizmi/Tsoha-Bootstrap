@@ -27,6 +27,14 @@ $routes->get('/kurssi/:id/edit', function($id) {
 	KurssiController::edit($id);
 });
 
+$routes->post('/kurssi/:id/edit', function($id) {
+	KurssiController::update($id);
+});
+
+$routes->post('/kurssi/:id/destroy', function($id) {
+	KurssiController::destroy($id);
+});
+
 $routes ->post('/kurssi', function() {
 	KurssiController::store();
 });
@@ -47,6 +55,14 @@ $routes->get('/aihe/:id', function($id) {
 
 $routes->get('/aihe/:id/edit', function($id) {
 	AiheController::edit($id);
+});
+
+$routes->post('/aihe/:id/edit', function($id) {
+	AiheController::update($id);
+});
+
+$routes->post('/aihe/:id/destroy', function($id) {
+	AiheController::destroy($id);
 });
 
 $routes ->post('/aihe', function() {
@@ -71,12 +87,29 @@ $routes->get('/termi/:id/edit', function($id) {
 	TermiController::edit($id);
 });
 
+$routes->post('/termi/:id/edit', function($id) {
+	TermiController::update($id);
+});
+
+$routes->post('/termi/:id/destroy', function($id) {
+	TermiController::destroy($id);
+});
+
 $routes ->post('/termi', function() {
 	TermiController::store();
 });
 
 //Kayttajasivut
 
-$routes->get('/login', function() {
-	#HelloWorldController::login();
+$routes->get('/login', function(){
+	OpiskelijaController::login();
+});
+
+$routes->post('/login', function(){
+  // Kirjautumisen käsittely
+	OpiskelijaController::handle_login();
+});
+
+$routes->post('/logout', function(){
+	OpiskelijaController::logout();
 });

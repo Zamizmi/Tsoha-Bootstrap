@@ -15,7 +15,7 @@ CREATE TABLE Aihe(
 
 CREATE TABLE Opiskelija(
 	id SERIAL PRIMARY KEY,
-	nimi varchar(50) NOT NULL,
+	kayttajatunnus varchar(50) NOT NULL,
 	salasana varchar(50) NOT NULL
 );
 

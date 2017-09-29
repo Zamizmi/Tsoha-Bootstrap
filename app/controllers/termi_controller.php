@@ -18,13 +18,47 @@ class TermiController extends BaseController{
 
 	public static function store() {
 		$params = $_POST;
-		$termi = new Termi(array(
+		$attributes = array(
 			'nimi' => $params['nimi'],
 			'englanniksi' => $params['englanniksi'],
 			'kuvaus' => $params['kuvaus']
-		));
-		$termi -> save();
-		Redirect::to('/termi/' . $termi->id, array('message' => 'Termi On Lisätty!'));
+		);
+		$termi = new Termi($attributes);
+		$errors = $termi->errors();
+
+		if(count($errors) == 0){
+			$termi->save();
+			Redirect::to('/termi/' . $termi->id, array('message' => 'Termi On Lisätty Järjestelmään!'));
+		}else{
+			View::make('termi/new.html', array('errors' => $errors, 'attributes' => $attributes));
+		}
+	}
+
+		public static function update($id){
+		$params = $_POST;
+		$attributes = array(
+			'id' => $id,
+			'nimi' => $params['nimi'],
+			'englanniksi' => $params['englanniksi'],
+			'kuvaus' => $params['kuvaus']
+		);
+
+		$termi = new Termi($attributes);
+		$errors = $termi->errors();
+
+		if(count($errors) == 0){
+			$termi->update();
+			Redirect::to('/termi/' . $termi->id, array('message' => 'Termi on muokattu onnistuneesti!'));
+		}else{
+			View::make('termi/edit.html', array('errors' => $errors, 'attributes' => $attributes));
+		}
+	}
+
+	public static function destroy($id){
+		$termi = new Termi(array('id' => $id));
+		$termi->destroy();
+
+		Redirect::to('/termi', array('message' => 'Termi on poistettu onnistuneesti!'));
 	}
 
 	public static function create() {
