@@ -22,4 +22,10 @@ class OpiskelijaController extends BaseController{
       Redirect::to('/', array('message' => 'Tervetuloa takaisin ' . $opiskelija->kayttajatunnus . '!'));
     }
   }
+
+  public static function show() {
+    self::check_logged_in();
+    $opiskelija = parent::get_user_logged_in();
+    View::make('opiskelija/show.html', array('message' => 'Täällä ei ole vielä mitään!', 'opiskelija' => $opiskelija));
+  }
 }

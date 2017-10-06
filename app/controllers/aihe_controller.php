@@ -7,17 +7,24 @@ class AiheController extends BaseController{
 	}
 
 	public static function show($id){
-		$aiheet = Aihe::find($id);
-		View::make('aihe/show.html', array('aiheet' => $aiheet));
+		$aihe = Aihe::find($id);
+		$aiheenKurssiaiheidenLkm = Aihe::aiheenKurssiaiheidenLkm($id);
+		$kurssit = Aihe::kurssitJoillaAihe($id);
+		View::make('aihe/show.html', array('aihe' => $aihe, 'aiheenKurssiaiheidenLkm' => $aiheenKurssiaiheidenLkm, 'kurssit' => $kurssit));
 	}
 
 	public static function edit($id){
-		$aiheet = Aihe::find($id);
-		View::make('aihe/edit.html', array('aiheet' => $aiheet));
+		$aihe = Aihe::find($id);
+		View::make('aihe/edit.html', array('aihe' => $aihe));
 	}
 
-	public static function store() {
+	public static function store(){
 		$params = $_POST;
+		$kurssit = array();
+		if (isset($params['kurssit'])) {
+			$kurssit = $params['kurssit'];
+		}
+
 		$attributes = array(
 			'nimi' => $params['nimi'],
 			'englanniksi' => $params['englanniksi'],
@@ -28,13 +35,18 @@ class AiheController extends BaseController{
 
 		if(count($errors) == 0){
 			$aihe->save();
+			foreach ($kurssit as $kurssi) {
+				$attributes['kurssit[]'] = $kurssi;
+				Aihe::saveKurssiaihe($kurssi, $aihe->id);
+			}
 			Redirect::to('/aihe/' . $aihe->id, array('message' => 'Aihe On Lisätty Järjestelmään!'));
 		}else{
-			View::make('aihe/new.html', array('errors' => $errors, 'attributes' => $attributes));
+			$kurssit = Kurssi::all();
+			View::make('aihe/new.html', array('errors' => $errors, 'attributes' => $attributes, 'kurssit'=> $kurssit));
 		}
 	}
 
-	public static function update($id){
+	public static function update($id) {
 		$params = $_POST;
 		$attributes = array(
 			'id' => $id,
@@ -62,6 +74,7 @@ class AiheController extends BaseController{
 	}
 
 	public static function create() {
-		View::make('aihe/new.html');
+		$kurssit = Kurssi::all();
+		View::make('aihe/new.html', array('kurssit' => $kurssit));
 	}
 }

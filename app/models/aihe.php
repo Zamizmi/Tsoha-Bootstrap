@@ -25,21 +25,66 @@ class Aihe extends BaseModel{
 		return $aiheet;
 	}
 
+	public static function kurssitJoillaAihe($aihe_id) {
+		$query = DB::connection()->prepare('SELECT DISTINCT id FROM Kurssi INNER JOIN Kurssiaihe ON Kurssiaihe.aihe_id = :aihe_id AND Kurssiaihe.kurssi_id = Kurssi.id');
+		$query -> execute(array('aihe_id' => $aihe_id));
+		$rows = $query->fetchAll();
+		$kurssit = array();
+
+		foreach($rows as $row){
+			$kurssi = Kurssi::find($row['id']);
+			if ($kurssi) {
+				$kurssit[] = $kurssi;
+			}
+		}
+		return $kurssit;
+	}
+
+	public static function aiheenKurssiaiheidenLkm($aihe_id) {
+		$query = DB::connection()->prepare('SELECT COUNT ( DISTINCT id) FROM Kurssi INNER JOIN Kurssiaihe ON Kurssiaihe.aihe_id = :aihe_id AND Kurssiaihe.kurssi_id = Kurssi.id');
+		$query -> execute(array('aihe_id' => $aihe_id));
+		$lukumaara = $query->fetch();
+
+		return $lukumaara[0];
+	}
+
+
+	public static function aiheetJoillaTiettyKurssiaihe($kurssi_id) {
+		$query = DB::connection()->prepare('SELECT DISTINCT id FROM Aihe INNER JOIN Kurssiaihe ON Kurssiaihe.kurssi_id = :kurssi_id ');
+		$query -> execute(array('kurssi_id' => $kurssi_id));
+		$rows = $query->fetchAll();
+		$aiheet = array();
+
+		foreach($rows as $row){
+			$aihe = Aihe::find($row['id']);
+			if ($aihe) {
+				$aiheet[] = $aihe;
+			}
+		}
+		return $aiheet;
+	}
+
+	public static function saveKurssiaihe($kurssi_id, $aihe_id) {
+		$aihe_id = Aihe::find($aihe_id);
+
+		$query = DB::connection()->prepare('INSERT INTO Kurssiaihe (kurssi_id, aihe_id) VALUES(:kurssi_id, :aihe_id)');
+		$query->execute(array('kurssi_id' => $kurssi_id, 'aihe_id' => $aihe_id->id));
+	}
+
 	public static function find($id) {
 		$query = DB::connection()->prepare('SELECT * FROM Aihe WHERE id = :id LIMIT 1');
 		$query->execute(array('id' => $id));
 		$row = $query->fetch();
-		$aiheet = array();
-
+		$aihe = array();
 
 		if($row){
-			$aiheet[] = new Aihe(array(
+			$aihe = new Aihe(array(
 				'id' => $row['id'],
 				'nimi' => $row['nimi'],
 				'englanniksi' => $row['englanniksi'],
 				'kuvaus' => $row['kuvaus']
 			));
-			return $aiheet;
+			return $aihe;
 		}
 		return null;
 	}
@@ -58,6 +103,8 @@ class Aihe extends BaseModel{
 	}
 
 	public function destroy() {
+		$kurssiaiheQuery =DB::connection()->prepare('DELETE FROM Kurssiaihe WHERE aihe_id =:id');
+		$kurssiaiheQuery -> execute(array('id' => $this->id));
 		$query = DB::connection()->prepare('DELETE FROM Aihe WHERE id =:id');
 		$query -> execute(array('id' => $this->id));
 	}

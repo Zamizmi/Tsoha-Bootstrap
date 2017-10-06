@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-{% for termi in termit %}
-<h1>Muokkaa Termiä "{{termi.nimi}}"</h1>
 {% if errors %}
 <div class="alert alert-danger">
   <ul>
@@ -12,6 +10,7 @@
   </ul>
 </div>
 {% endif %}
+<h1>Muokkaa Termiä {{termi.nimi}}</h1>
 <form method="post" action="{{base_path}}/termi/{{termi.id}}/edit">
   <div class="form-group">
     <label>Termin Nimi</label>
@@ -32,5 +31,4 @@
     <button type="submit" class="btn btn-primary">Tallenna Muutokset</button>
   </div>
 </form>
-{% endfor %}
 {% endblock %}

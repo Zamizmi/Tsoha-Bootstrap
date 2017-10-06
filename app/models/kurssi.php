@@ -43,6 +43,36 @@ class Kurssi extends BaseModel{
 		return null;
 	}
 
+	public static function aiheetJoillaKurssi($kurssi_id) {
+		$query = DB::connection()->prepare('SELECT DISTINCT id FROM Aihe INNER JOIN Kurssiaihe ON Kurssiaihe.kurssi_id = :kurssi_id AND Aihe.id = Kurssiaihe.aihe_id');
+		$query -> execute(array('kurssi_id' => $kurssi_id));
+		$rows = $query->fetchAll();
+		$aiheet = array();
+
+		foreach($rows as $row){
+			$aihe = Aihe::find($row['id']);
+			if ($aihe) {
+				$aiheet[] = $aihe;
+			}
+		}
+		return $aiheet;
+	}
+
+	public static function kurssinKurssiaiheidenLkm($kurssi_id) {
+		$query = DB::connection()->prepare('SELECT COUNT ( DISTINCT id) FROM Aihe INNER JOIN Kurssiaihe ON Kurssiaihe.kurssi_id = :kurssi_id AND Aihe.id = Kurssiaihe.aihe_id');
+		$query -> execute(array('kurssi_id' => $kurssi_id));
+		$lukumaara = $query->fetch();
+
+		return $lukumaara[0];
+	}
+
+	public static function saveKurssiaihe($kurssi_id, $aihe_id) {
+		$kurssi = Kurssi::find($kurssi_id);
+
+		$query = DB::connection()->prepare('INSERT INTO Kurssiaihe (kurssi_id, aihe_id) VALUES(:kurssi_id, :aihe_id)');
+		$query->execute(array('kurssi_id' => $kurssi->id, 'aihe_id' => $aihe_id));
+	}
+
 	public function save() {
 		$query = DB::connection() -> prepare('INSERT INTO Kurssi (nimi, kurssitunnus, kuvaus) VALUES (:nimi, :kurssitunnus, :kuvaus) RETURNING id');
 		$query -> execute(array('nimi' => $this->nimi, 'kurssitunnus' => $this->kurssitunnus, 'kuvaus' => $this->kuvaus));
@@ -56,6 +86,8 @@ class Kurssi extends BaseModel{
 	}
 
 	public function destroy() {
+		$kurssiaiheQuery =DB::connection()->prepare('DELETE FROM Kurssiaihe WHERE kurssi_id =:id');
+		$kurssiaiheQuery -> execute(array('id' => $this->id));
 		$query = DB::connection()->prepare('DELETE FROM Kurssi WHERE id =:id');
 		$query -> execute(array('id' => $this->id));
 	}

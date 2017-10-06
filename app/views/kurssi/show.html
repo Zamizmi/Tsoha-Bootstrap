@@ -16,8 +16,12 @@
 	<li><strong>Kurssitunnus:</strong> {{kurssi.kurssitunnus}}</li>
 	<br>
 	<li><strong>Kuvaus:</strong> {{kurssi.kuvaus}}</li>
-	<!--<strong>Aiheiden Lukumäärä:</strong> {{kurssiaihe}}</li> -->
-	<!--<strong>Termien Lukumäärä:</strong> {{kurssiaihe}}</li> -->
+	<br>
+	<li><strong>Aiheiden Lukumäärä:</strong> {{kurssinKurssiaiheidenLkm}}</li>
+	{% for aihe in aiheet %}
+	<br>
+	<strong><a href="{{base_path}}/aihe/{{aihe.id}}">{{aihe.nimi}}</a></strong>
+	{% endfor %}
 </ul>
 <br>
 {{forms.destroy_button("#{base_path}/kurssi/#{kurssi.id}/destroy")}}

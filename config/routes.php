@@ -105,6 +105,11 @@ $routes->get('/login', function(){
 	OpiskelijaController::login();
 });
 
+$routes->get('/opiskelija/:id', function() {
+  // Kirjautumisen käsittely
+	OpiskelijaController::show();
+});
+
 $routes->post('/login', function(){
   // Kirjautumisen käsittely
 	OpiskelijaController::handle_login();

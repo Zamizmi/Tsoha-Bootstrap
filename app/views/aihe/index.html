@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Aiheet</h1>
+{% if message %}
+<div class="alert alert-success">
+  <ul>
+    <li>{{message}}</li>
+    <br>
+  </ul>
+</div>
+{% endif %}
 
 <p>
   <a href="{{base_path}}/aihe/new" class="btn btn-success">Lisää Aihe</a>
@@ -19,10 +27,6 @@
     {% for aihe in aiheet %}
     <tr>
       <td><a href="{{base_path}}/aihe/{{aihe.id}}">{{aihe.nimi}}</a></td>
-      <!-- TODO Laita lkm tietokannasta -->
-      <td>1</td>
-      <!-- TODO Laita lkm tietokannasta -->
-      <td>1</td>
     </tr>
     {% endfor %}
   </tbody>

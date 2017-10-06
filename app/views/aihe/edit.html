@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-{% for aihe in aiheet %}
-<h1>Muokkaa Aihetta {{aihe.nimi}}</h1>
 {% if errors %}
 <div class="alert alert-danger">
   <ul>
@@ -12,6 +10,7 @@
   </ul>
 </div>
 {% endif %}
+<h1>Muokkaa Aihetta {{aihe.nimi}}</h1>
 <form method="post" action="{{base_path}}/aihe/{{aihe.id}}/edit">
   <div class="form-group">
     <label>Aiheen Nimi</label>
@@ -32,5 +31,5 @@
     <button type="submit" class="btn btn-primary">Tallenna Muutokset</button>
   </div>
 </form>
-{% endfor %}
+<p>Ei pysty vielä muuttamaan yhteyksiä kursseihin.</p>
 {% endblock %}

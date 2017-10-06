@@ -9,10 +9,14 @@ class HelloWorldController extends BaseController{
       'kurssitunnus' => 'jymppa',
       'kuvaus' => 'jeejee'
     ));
-    $kurssi = Kurssi::find(1);
-    $messages = $jym->errors();
-    Kint::dump($kurssi);
-    #Kint::dump($aiheet);
-    #Kint::dump($termit);
+    $aiheetJoillaKurssiaihe = Aihe::aiheetJoillaKurssiaihe(1);
+    $aiheetJoillaTiettyKurssiaihe = Aihe::aiheetJoillaTiettyKurssiaihe(1);
+    $kurssitJoillaKurssiaihe = Kurssi::kurssitJoillaKurssiaihe(1);
+    $kurssinKurssiaiheidenLkm = Kurssi::kurssinKurssiaiheidenLkm(1);
+    Kint::dump($aiheetJoillaKurssiaihe);
+    Kint::dump($aiheetJoillaTiettyKurssiaihe);
+    Kint::dump($kurssitJoillaKurssiaihe);
+    Kint::dump($kurssinKurssiaiheidenLkm);
+    Kint::dump(Kurssi::all());
   }
 }

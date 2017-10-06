@@ -8,16 +8,23 @@ class KurssiController extends BaseController{
 
 	public static function show($id){
 		$kurssi = Kurssi::find($id);
-		View::make('kurssi/show.html', array('kurssi' => $kurssi));
+		$kurssinKurssiaiheidenLkm = Kurssi::kurssinKurssiaiheidenLkm($id);
+		$aiheet = Kurssi::aiheetJoillaKurssi($id);
+		View::make('kurssi/show.html', array('kurssi' => $kurssi, 'kurssinKurssiaiheidenLkm' => $kurssinKurssiaiheidenLkm, 'aiheet' => $aiheet));
 	}
 
 	public static function edit($id){
 		$kurssi = Kurssi::find($id);
-		View::make('kurssi/edit.html', array('kurssi' => $kurssi));
+		View::make('kurssi/edit.html', array('attributes' => $kurssi));
 	}
 
 	public static function store() {
 		$params = $_POST;
+		$aiheet = array();
+		if (isset($params['aiheet'])) {
+			$aiheet = $params['aiheet'];
+		}
+
 		$attributes = array(
 			'nimi' => $params['nimi'],
 			'kurssitunnus' => $params['kurssitunnus'],
@@ -28,9 +35,13 @@ class KurssiController extends BaseController{
 
 		if(count($errors) == 0){
 			$kurssi->save();
+			foreach ($aiheet as $aihe) {
+				$attributes['aiheet[]'] = $aihe;
+				Kurssi::saveKurssiaihe($kurssi->id, $aihe);
+			}
 			Redirect::to('/kurssi/' . $kurssi->id, array('message' => 'Kurssi On Lisätty Järjestelmään!'));
 		}else{
-			View::make('kurssi/new.html', array('errors' => $errors, 'attributes' => $attributes));
+			View::make('kurssi/new.html', array('errors' => $errors, 'attributes' => $attributes, 'aiheet' => $aiheet));
 		}
 	}
 
@@ -50,11 +61,12 @@ class KurssiController extends BaseController{
 			$kurssi->update();
 			Redirect::to('/kurssi/' . $kurssi->id, array('message' => 'Kurssi on muokattu onnistuneesti!'));
 		}else{
-			View::make('kurssi/edit.html', array('errors' => $errors, 'attributes' => $attributes));
+			View::make('kurssi/edit.html', array('errors' => $errors, 'attributes' => $attributes, 'aiheet' => $aiheet));
 		}
 	}
 
 	public static function destroy($id){
+		
 		$kurssi = new Kurssi(array('id' => $id));
 		$kurssi->destroy();
 
@@ -62,6 +74,7 @@ class KurssiController extends BaseController{
 	}
 
 	public static function create() {
-		View::make('kurssi/new.html');
+		$aiheet = Aihe::all();
+		View::make('kurssi/new.html', array('aiheet' => $aiheet));
 	}
 }
