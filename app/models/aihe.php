@@ -71,6 +71,52 @@ class Aihe extends BaseModel{
 		$query->execute(array('kurssi_id' => $kurssi_id, 'aihe_id' => $aihe_id->id));
 	}
 
+	public static function termitJoillaAihe($aihe_id) {
+		$query = DB::connection()->prepare('SELECT DISTINCT id FROM Termi INNER JOIN Termiaihe ON Termiaihe.aihe_id = :aihe_id AND Termiaihe.termi_id = Termi.id');
+		$query -> execute(array('aihe_id' => $aihe_id));
+		$rows = $query->fetchAll();
+		$termit = array();
+
+		foreach($rows as $row){
+			$termi = Termi::find($row['id']);
+			if ($termi) {
+				$termit[] = $termi;
+			}
+		}
+		return $termit;
+	}
+
+	public static function aiheenTermiaiheidenLkm($aihe_id) {
+		$query = DB::connection()->prepare('SELECT COUNT ( DISTINCT id) FROM Termi INNER JOIN Termiaihe ON Termiaihe.aihe_id = :aihe_id AND Termiaihe.termi_id = Termi.id');
+		$query -> execute(array('aihe_id' => $aihe_id));
+		$lukumaara = $query->fetch();
+
+		return $lukumaara[0];
+	}
+
+
+	public static function aiheetJoillaTiettyTermiaihe($termi_id) {
+		$query = DB::connection()->prepare('SELECT DISTINCT id FROM Aihe INNER JOIN Termiaihe ON Termiaihe.termi_id = :termi_id ');
+		$query -> execute(array('termi_id' => $termi_id));
+		$rows = $query->fetchAll();
+		$aiheet = array();
+
+		foreach($rows as $row){
+			$aihe = Aihe::find($row['id']);
+			if ($aihe) {
+				$aiheet[] = $aihe;
+			}
+		}
+		return $aiheet;
+	}
+
+	public static function saveTermiaihe($termi_id, $aihe_id) {
+		$aihe_id = Aihe::find($aihe_id);
+
+		$query = DB::connection()->prepare('INSERT INTO Termiaihe (termi_id, aihe_id) VALUES(:termi_id, :aihe_id)');
+		$query->execute(array('termi_id' => $termi_id, 'aihe_id' => $aihe_id->id));
+	}
+
 	public static function find($id) {
 		$query = DB::connection()->prepare('SELECT * FROM Aihe WHERE id = :id LIMIT 1');
 		$query->execute(array('id' => $id));
@@ -105,6 +151,8 @@ class Aihe extends BaseModel{
 	public function destroy() {
 		$kurssiaiheQuery =DB::connection()->prepare('DELETE FROM Kurssiaihe WHERE aihe_id =:id');
 		$kurssiaiheQuery -> execute(array('id' => $this->id));
+		$termiaiheQuery =DB::connection()->prepare('DELETE FROM Termiaihe WHERE aihe_id =:id');
+		$termiaiheQuery -> execute(array('id' => $this->id));
 		$query = DB::connection()->prepare('DELETE FROM Aihe WHERE id =:id');
 		$query -> execute(array('id' => $this->id));
 	}

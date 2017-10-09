@@ -36,6 +36,15 @@
     </select>
   </div>
 
+    <div class="form-group">
+    <label>Aiheeseen Liittyy Termit</label>
+    <select class="form-control" name="termit[]" multiple="">
+      {% for termi in termit %}
+      <option value="{{termi.id}}">{{termi.nimi}}</option>
+      {% endfor %}
+    </select>
+  </div>
+
   <div class="form-group">
     <button type="submit" class="btn btn-primary">Lisää</button>
   </div>

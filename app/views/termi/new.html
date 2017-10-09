@@ -28,6 +28,15 @@
   <input type="text" name="kuvaus" class="form-control">{{attributes.kuvaus}}</textarea>
 </div>
 
+  <div class="form-group">
+    <label>Termi Liittyy Aiheisiin </label>
+    <select class="form-control" name="aiheet[]" multiple="">
+      {% for aihe in aiheet %}
+      <option value="{{aihe.id}}">{{aihe.nimi}}</option>
+      {% endfor %}
+    </select>
+  </div>
+
 <div class="form-group">
   <button type="submit" class="btn btn-primary">Lisää</button>
 </div>

@@ -20,8 +20,13 @@
 	<br>
 	<strong><a href="{{base_path}}/kurssi/{{kurssi.id}}">{{kurssi.nimi}}</a></strong>
 	{% endfor %}
-	<!--<strong>Termien Lukumäärä:</strong> {{kurssiaihe}}</li> -->
-	
+	<br>
+	<li><strong>Termien Lukumäärä:</strong> {{aiheenTermiaiheidenLkm}}</li>
+	{% for termi in termit %}
+	<br>
+	<strong><a href="{{base_path}}/termi/{{termi.id}}">{{termi.nimi}}</a></strong>
+	{% endfor %}
+	<br>
 </ul>
 <br>
 {{forms.destroy_button("#{base_path}/aihe/#{aihe.id}/destroy")}}

@@ -9,8 +9,11 @@ class AiheController extends BaseController{
 	public static function show($id){
 		$aihe = Aihe::find($id);
 		$aiheenKurssiaiheidenLkm = Aihe::aiheenKurssiaiheidenLkm($id);
+		$aiheenTermiaiheidenLkm = Aihe::aiheenTermiaiheidenLkm($id);
+
 		$kurssit = Aihe::kurssitJoillaAihe($id);
-		View::make('aihe/show.html', array('aihe' => $aihe, 'aiheenKurssiaiheidenLkm' => $aiheenKurssiaiheidenLkm, 'kurssit' => $kurssit));
+		$termit = Aihe::termitJoillaAihe($id);
+		View::make('aihe/show.html', array('aihe' => $aihe, 'aiheenKurssiaiheidenLkm' => $aiheenKurssiaiheidenLkm, 'kurssit' => $kurssit, 'termit' => $termit, 'aiheenTermiaiheidenLkm' => $aiheenTermiaiheidenLkm));
 	}
 
 	public static function edit($id){
@@ -21,8 +24,13 @@ class AiheController extends BaseController{
 	public static function store(){
 		$params = $_POST;
 		$kurssit = array();
+		$termit = array();
 		if (isset($params['kurssit'])) {
 			$kurssit = $params['kurssit'];
+		}
+
+		if (isset($params['termit'])) {
+			$termit = $params['termit'];
 		}
 
 		$attributes = array(
@@ -39,10 +47,14 @@ class AiheController extends BaseController{
 				$attributes['kurssit[]'] = $kurssi;
 				Aihe::saveKurssiaihe($kurssi, $aihe->id);
 			}
+			foreach ($termit as $termi) {
+				$attributes['termit[]'] = $termi;
+				Aihe::saveTermiaihe($termi, $aihe->id);
+			}
 			Redirect::to('/aihe/' . $aihe->id, array('message' => 'Aihe On Lisätty Järjestelmään!'));
 		}else{
 			$kurssit = Kurssi::all();
-			View::make('aihe/new.html', array('errors' => $errors, 'attributes' => $attributes, 'kurssit'=> $kurssit));
+			View::make('aihe/new.html', array('errors' => $errors, 'attributes' => $attributes, 'kurssit'=> $kurssit, 'termit' => $termit));
 		}
 	}
 
@@ -75,6 +87,7 @@ class AiheController extends BaseController{
 
 	public static function create() {
 		$kurssit = Kurssi::all();
-		View::make('aihe/new.html', array('kurssit' => $kurssit));
+		$termit = Termi::all();
+		View::make('aihe/new.html', array('kurssit' => $kurssit, 'termit' => $termit));
 	}
 }

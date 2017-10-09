@@ -6,11 +6,10 @@ class Termiaihe extends BaseModel{
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
-		#$this->validators = array('validate_nimi', 'validate_englanniksi', 'validate_kuvaus');
 
 	}
 
-	public static function findTermiaiheTermilla($termi_id) {
+	public static function findTermiaiheetTermilla($termi_id) {
 		$query = DB::connection()->prepare('SELECT * FROM Termiaihe WHERE termi_id = :termi_id');
 		$query->execute(array('termi_id' => $termi_id));
 		$rows = $query->fetch();
