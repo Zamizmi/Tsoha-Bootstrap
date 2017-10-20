@@ -1,33 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-{% if errors %}
-<div class="alert alert-danger">
+{% import "macros/forms.html" as forms %}
+<h1>{{kurssi.nimi}}</h1>
+<div class="show">
 	<ul>
-		{% for error in errors %}
-		<li>{{error}}</li>
+		<li><strong>Kurssitunnus:</strong> {{kurssi.kurssitunnus}}</li>
 		<br>
+		<li><strong>Kuvaus:</strong> {{kurssi.kuvaus}}</li>
+		<br>
+		<li><strong>Aiheiden Lukumäärä:</strong> {{kurssinKurssiaiheidenLkm}}</li>
+		{% for aihe in aiheet %}
+		<br>
+		<strong><a href="{{base_path}}/aihe/{{aihe.id}}">{{aihe.nimi}}</a></strong>
 		{% endfor %}
 	</ul>
 </div>
-{% endif %}
-{% import "macros/forms.html" as forms %}
-<h1>{{kurssi.nimi}}</h1>
-<ul>
-	<li><strong>Kurssitunnus:</strong> {{kurssi.kurssitunnus}}</li>
-	<br>
-	<li><strong>Kuvaus:</strong> {{kurssi.kuvaus}}</li>
-	<br>
-	<li><strong>Aiheiden Lukumäärä:</strong> {{kurssinKurssiaiheidenLkm}}</li>
-	{% for aihe in aiheet %}
-	<br>
-	<strong><a href="{{base_path}}/aihe/{{aihe.id}}">{{aihe.nimi}}</a></strong>
-	{% endfor %}
-</ul>
 <br>
 {{forms.destroy_button("#{base_path}/kurssi/#{kurssi.id}/destroy")}}
 <br>
 <br>
 <p>
-	<a href="{{base_path}}/kurssi/{{kurssi.id}}/edit" class="btn btn-info">Muokkaa</a>
+	<a href="{{base_path}}/kurssi/{{kurssi.id}}/edit" class="btn btn-primary">Muokkaa</a>
 </p>
 {% endblock %}

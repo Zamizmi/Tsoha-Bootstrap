@@ -1,52 +1,44 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Lisää Uusi Aihe</h1>
-{% if errors %}
-<div class="alert alert-danger">
-  <ul>
-    {% for error in errors %}
-    <li>{{error}}</li>
-    <br>
-    {% endfor %}
-  </ul>
-</div>
-{% endif %}
-<form method="post" action="{{base_path}}/aihe">
-  <div class="form-group">
-    <label>Aiheen Nimi</label>
-    <input type="text" name="nimi" class="form-control" value="{{attributes.nimi}}">
-  </div>
-
-  <div class="form-group">
-    <label>Aihe Englanniksi</label>
-    <input type="text" name="englanniksi" class="form-control" value="{{attributes.englanniksi}}">
-  </div>
-
-  <div class="form-group">
-    <label>Kuvaus</label>
-    <input type="text" name="kuvaus" class="form-control" value="{{attributes.kuvaus}}">
-  </div>
-
-  <div class="form-group">
-    <label>Sisältyy Kursseihin</label>
-    <select class="form-control" name="kurssit[]" multiple="">
-      {% for kurssi in kurssit %}
-      <option value="{{kurssi.id}}">{{kurssi.nimi}}</option>
-      {% endfor %}
-    </select>
-  </div>
+<div class="show">
+  <form method="post" action="{{base_path}}/aihe">
+    <div class="form-group">
+      <label>Aiheen Nimi</label>
+      <input type="text" name="nimi" class="form-control" value="{{attributes.nimi}}">
+    </div>
 
     <div class="form-group">
-    <label>Aiheeseen Liittyy Termit</label>
-    <select class="form-control" name="termit[]" multiple="">
-      {% for termi in termit %}
-      <option value="{{termi.id}}">{{termi.nimi}}</option>
-      {% endfor %}
-    </select>
-  </div>
+      <label>Aihe Englanniksi</label>
+      <input type="text" name="englanniksi" class="form-control" value="{{attributes.englanniksi}}">
+    </div>
 
-  <div class="form-group">
-    <button type="submit" class="btn btn-primary">Lisää</button>
-  </div>
-</form>
+    <div class="form-group">
+      <label>Kuvaus</label>
+      <input type="text" name="kuvaus" class="form-control" value="{{attributes.kuvaus}}">
+    </div>
+
+    <div class="form-group">
+      <label>Sisältyy Kursseihin</label>
+      <select class="form-control" name="kurssit[]" multiple="">
+        {% for kurssi in kurssit %}
+        <option value="{{kurssi.id}}">{{kurssi.nimi}}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Aiheeseen Liittyy Termit</label>
+      <select class="form-control" name="termit[]" multiple="">
+        {% for termi in termit %}
+        <option value="{{termi.id}}">{{termi.nimi}}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Lisää</button>
+    </div>
+  </form>
+</div>
 {% endblock %}

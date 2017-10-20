@@ -18,7 +18,9 @@ class AiheController extends BaseController{
 
 	public static function edit($id){
 		$aihe = Aihe::find($id);
-		View::make('aihe/edit.html', array('aihe' => $aihe));
+		$kurssit = Kurssi::all();
+		$termit = Termi::all();
+		View::make('aihe/edit.html', array('aihe' => $aihe, 'kurssit' =>$kurssit, 'termit' => $termit));
 	}
 
 	public static function store(){
@@ -53,6 +55,7 @@ class AiheController extends BaseController{
 			}
 			Redirect::to('/aihe/' . $aihe->id, array('message' => 'Aihe On Lisätty Järjestelmään!'));
 		}else{
+			$termit = Termi::all();
 			$kurssit = Kurssi::all();
 			View::make('aihe/new.html', array('errors' => $errors, 'attributes' => $attributes, 'kurssit'=> $kurssit, 'termit' => $termit));
 		}
@@ -60,6 +63,9 @@ class AiheController extends BaseController{
 
 	public static function update($id) {
 		$params = $_POST;
+		$kurssit = array();
+		$termit = array();
+
 		$attributes = array(
 			'id' => $id,
 			'nimi' => $params['nimi'],
@@ -72,9 +78,19 @@ class AiheController extends BaseController{
 
 		if(count($errors) == 0){
 			$aihe->update();
-			Redirect::to('/aihe/' . $aihe->id, array('message' => 'Aihe on muokattu onnistuneesti!'));
+			foreach ($kurssit as $kurssi) {
+				$attributes['kurssit[]'] = $kurssi;
+				Aihe::saveKurssiaihe($kurssi, $aihe->id);
+			}
+			foreach ($termit as $termi) {
+				$attributes['termit[]'] = $termi;
+				Aihe::saveTermiaihe($termi, $aihe->id);
+			}
+			Redirect::to('/aihe/' . $aihe->id, array('message' => 'Aihe On Muokattu Onnistuneesti!'));
 		}else{
-			View::make('aihe/edit.html', array('errors' => $errors, 'attributes' => $attributes));
+			$termit = Termi::all();
+			$kurssit = Kurssi::all();
+			View::make('aihe/new.html', array('errors' => $errors, 'attributes' => $attributes, 'kurssit'=> $kurssit, 'termit' => $termit));
 		}
 	}
 

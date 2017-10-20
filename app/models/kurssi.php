@@ -73,6 +73,11 @@ class Kurssi extends BaseModel{
 		$query->execute(array('kurssi_id' => $kurssi->id, 'aihe_id' => $aihe_id));
 	}
 
+	public static function deleteKurssiaihe($kurssi_id) {
+		$kurssiaiheQuery =DB::connection()->prepare('DELETE FROM Kurssiaihe WHERE kurssi_id =:kurssi_id');
+		$kurssiaiheQuery -> execute(array('kurssi_id' => $kurssi_id));
+	}
+
 	public function save() {
 		$query = DB::connection() -> prepare('INSERT INTO Kurssi (nimi, kurssitunnus, kuvaus) VALUES (:nimi, :kurssitunnus, :kuvaus) RETURNING id');
 		$query -> execute(array('nimi' => $this->nimi, 'kurssitunnus' => $this->kurssitunnus, 'kuvaus' => $this->kuvaus));
@@ -86,8 +91,7 @@ class Kurssi extends BaseModel{
 	}
 
 	public function destroy() {
-		$kurssiaiheQuery =DB::connection()->prepare('DELETE FROM Kurssiaihe WHERE kurssi_id =:id');
-		$kurssiaiheQuery -> execute(array('id' => $this->id));
+		Kurssi::deleteKurssiaihe($this->id);
 		$query = DB::connection()->prepare('DELETE FROM Kurssi WHERE id =:id');
 		$query -> execute(array('id' => $this->id));
 	}

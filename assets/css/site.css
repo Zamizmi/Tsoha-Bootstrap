@@ -1,15 +1,43 @@
-body {
+body {/* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(-90deg, #08316d, black); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(-90deg, #08316d, black); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(-90deg, #08316d, black); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(-90deg, #08316d, black); /* Standard syntax */
+}
+
+.navbar {
+  background-color:#3a3a3a;
+  margin: 10px;
+}
+
+.navbar a:hover{
+  color: #b68a8a;
 }
 
 #main-container{
   max-width: 1200px;
-  padding: 10px 25px;
-  margin: 0px auto;
+  padding: 25px 50px;
+}
+
+input {
+  margin: 25px;
+}
+
+h1 {
+  color: #4b7b9e;
+  font-size: 200%;
+  text-align: center;
+  padding: 5px;
+}
+
+th {
+  font-size: 100%%;
+  color: #4b7b9e;
 }
 
 .navbar .container-fluid{
   max-width: 1200px;
-  margin: 0px auto;
+  margin: 0% auto;
 }
 
 img {
@@ -20,6 +48,11 @@ input, textarea {
   max-width:100%
 }
 
+.show {
+  font-size: 18px;
+  border: 4px;
+}
+
 ul {
   list-style-type: none;
   margin: 0;
@@ -27,19 +60,86 @@ ul {
   overflow: hidden;
 }
 
+td {
+  color: #346b7a;
+  background-color: #071030;
+}
+
 li {
   float: left;
+  color: white;
 }
 
 li a {
   display: block;
   color: white;
-  text-align: center;
-  padding: 14px 16px;
+  padding: 14% 16%;
   text-decoration: none;
 }
 
 li a:hover {
   color: #b68a8a;
+}
 
+.badge {
+  font-size: 115%;
+}
+
+.btn-primary {
+  size: 125%;
+  background-color: #505050;
+  border: 50px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+}
+
+.btn-primary:hover {
+  background-color: #808080;
+}
+
+.btn:hover {
+  color: #222738;
+}
+
+.form-group {
+  align-self: center;
+}
+
+label {
+  text-align: center;
+  color: white;
+  font-size: 150%
+}
+
+.alert-danger {
+    color: #000000;
+    background-color: #564d69;
+}
+
+.navbar-toggle {
+  color: b68a8a;
+}
+
+.footer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  width: 100%;
+  background-color: #efefef;
+  text-align: center;
+}
+
+.alert-success {
+  background-color: #505050;
+  border-color: #000000;
+}
+
+.alert-danger {
+  background-color: #561515
+  border-color: #000000;
 }

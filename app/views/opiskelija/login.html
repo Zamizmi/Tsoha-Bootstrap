@@ -1,34 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Kirjaudu sisään</h1>
-{% if message %}
-<div class="alert alert-success">
-	<ul>
-		<li>{{message}}</li>
-		<br>
-	</ul>
+<div class="show">
+	<form method="post" action="{{base_path}}/login">
+		<div class="form-group">
+			<label>Käyttäjätunnus</label>
+			<input type="text" class="form-control" name="kayttajatunnus" value="{{kayttajatunnus}}">
+		</div>
+
+		<div class="form-group">
+			<label>Salasana</label>
+			<input type="password" class="form-control" name="salasana">
+		</div>
+
+		<button type="submit" class="btn btn-primary">Kirjaudu sisään</button>
+	</form>
 </div>
-{% endif %}
-{% if error %}
-<div class="alert alert-danger">
-	<ul>
-		<li>{{error}}</li>
-		<br>
-	</ul>
-</div>
-{% endif %}
-
-<form method="post" action="{{base_path}}/login">
-	<div class="form-group">
-		<label>Käyttäjätunnus</label>
-		<input type="text" class="form-control" name="kayttajatunnus" value="{{kayttajatunnus}}">
-	</div>
-
-	<div class="form-group">
-		<label>Salasana</label>
-		<input type="password" class="form-control" name="salasana">
-	</div>
-
-	<button type="submit" class="btn btn-primary">Kirjaudu sisään</button>
-</form>
 {% endblock %}

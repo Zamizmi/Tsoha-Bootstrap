@@ -15,7 +15,9 @@ class KurssiController extends BaseController{
 
 	public static function edit($id){
 		$kurssi = Kurssi::find($id);
-		View::make('kurssi/edit.html', array('attributes' => $kurssi));
+		$aiheet = Aihe::all();
+
+		View::make('kurssi/edit.html', array('attributes' => $kurssi, 'aiheet' => $aiheet));
 	}
 
 	public static function store() {
@@ -41,6 +43,7 @@ class KurssiController extends BaseController{
 			}
 			Redirect::to('/kurssi/' . $kurssi->id, array('message' => 'Kurssi On Lisätty Järjestelmään!'));
 		}else{
+			$aiheet = Aihe::all();
 			View::make('kurssi/new.html', array('errors' => $errors, 'attributes' => $attributes, 'aiheet' => $aiheet));
 		}
 	}
@@ -53,15 +56,24 @@ class KurssiController extends BaseController{
 			'kurssitunnus' => $params['kurssitunnus'],
 			'kuvaus' => $params['kuvaus']
 		);
+		$aiheet = array();
+		if (isset($params['aiheet'])) {
+			$aiheet = $params['aiheet'];
+		}
 
 		$kurssi = new Kurssi($attributes);
 		$errors = $kurssi->errors();
 
 		if(count($errors) == 0){
 			$kurssi->update();
-			Redirect::to('/kurssi/' . $kurssi->id, array('message' => 'Kurssi on muokattu onnistuneesti!'));
+			foreach ($aiheet as $aihe) {
+				$attributes['aiheet[]'] = $aihe;
+				Kurssi::saveKurssiaihe($kurssi->id, $aihe);
+			}
+			Redirect::to('/kurssi/' . $kurssi->id, array('message' => 'Kurssi On Muokattu Onnistuneesti!'));
 		}else{
-			View::make('kurssi/edit.html', array('errors' => $errors, 'attributes' => $attributes, 'aiheet' => $aiheet));
+			$aiheet = Aihe::all();
+			View::make('kurssi/'.$kurssi->id.'edit.html', array('errors' => $errors, 'attributes' => $attributes, 'aiheet' => $aiheet));
 		}
 	}
 

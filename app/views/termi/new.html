@@ -1,32 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Lisää Uusi Termi</h1>
-{% if errors %}
-<div class="alert alert-danger">
-  <ul>
-    {% for error in errors %}
-    <li>{{error}}</li>
-    <br>
-    {% endfor %}
-  </ul>
-</div>
-{% endif %}
-<form method="post" action="{{base_path}}/termi">
-  <div class="form-group">
-    <label>Termin nimi</label>
-    <input type="text" name="nimi" class="form-control" value="{{attributes.nimi}}">
+<div class="show">
+  <form method="post" action="{{base_path}}/termi">
+    <div class="form-group">
+      <label>Termin nimi</label>
+      <input type="text" name="nimi" class="form-control" value="{{attributes.nimi}}">
+    </div>
+
+    <div class="form-group">
+      <label>Termi Englanniksi</label>
+      <input type="text" name="englanniksi" class="form-control" value="{{attributes.englanniksi}}">
+    </textarea>
   </div>
 
   <div class="form-group">
-    <label>Termi Englanniksi</label>
-    <input type="text" name="englanniksi" class="form-control" value="{{attributes.englanniksi}}">
-  </textarea>
-</div>
-
-<div class="form-group">
-  <label>Kuvaus</label>
-  <input type="text" name="kuvaus" class="form-control">{{attributes.kuvaus}}</textarea>
-</div>
+    <label>Kuvaus</label>
+    <input type="text" name="kuvaus" class="form-control">{{attributes.kuvaus}}</textarea>
+  </div>
 
   <div class="form-group">
     <label>Termi Liittyy Aiheisiin </label>
@@ -37,8 +28,9 @@
     </select>
   </div>
 
-<div class="form-group">
-  <button type="submit" class="btn btn-primary">Lisää</button>
-</div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Lisää</button>
+  </div>
 </form>
+</div>
 {% endblock %}

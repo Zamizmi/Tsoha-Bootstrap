@@ -1,16 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-{% if message %}
-<div class="alert alert-success">
-  <ul>
-    <li>{{message}}</li>
-    <br>
-  </ul>
-</div>
-{% endif %}
 
 {% if opiskelija %}
 <h1>Käyttäjän tiedot: {{opiskelija.kayttajatunnus}}</h1>
+<div class="show">
+</div>
 {% endif %}
 
 {% endblock %}

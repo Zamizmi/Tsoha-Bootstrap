@@ -16,7 +16,8 @@ class TermiController extends BaseController{
 
 	public static function edit($id){
 		$termi = Termi::find($id);
-		View::make('termi/edit.html', array('termi' => $termi));
+		$aiheet = Aihe::all();
+		View::make('termi/edit.html', array('termi' => $termi, 'aiheet' => $aiheet));
 	}
 
 	public static function store() {
@@ -44,7 +45,8 @@ class TermiController extends BaseController{
 			}
 			Redirect::to('/termi/' . $termi->id, array('message' => 'Termi On Lisätty Järjestelmään!'));
 		}else{
-			View::make('termi/new.html', array('errors' => $errors, 'attributes' => $attributes, 'aihe' =>$aiheetLista));
+			$aiheet = Aihe::all();
+			View::make('termi/new.html', array('errors' => $errors, 'attributes' => $attributes, 'aiheet' =>$aiheetLista));
 		}
 	}
 
@@ -56,15 +58,24 @@ class TermiController extends BaseController{
 			'englanniksi' => $params['englanniksi'],
 			'kuvaus' => $params['kuvaus']
 		);
+		$aiheet = array();
+		if (isset($params['aiheet'])) {
+			$aiheet = $params['aiheet'];
+		}
 
 		$termi = new Termi($attributes);
 		$errors = $termi->errors();
 
 		if(count($errors) == 0){
 			$termi->update();
-			Redirect::to('/termi/' . $termi->id, array('message' => 'Termi on muokattu onnistuneesti!'));
+			foreach ($aiheet as $aihe) {
+				$attributes['aiheet[]'] = $aihe;
+				Termi::saveTermiaihe($termi->id, $aihe);
+			}
+			Redirect::to('/termi/' . $termi->id, array('message' => 'Termi On Muokattu Onnistuneesti!'));
 		}else{
-			View::make('termi/edit.html', array('errors' => $errors, 'attributes' => $attributes));
+			$aiheet = Aihe::all();
+			View::make('termi/'.$termi->id.'edit.html', array('errors' => $errors, 'attributes' => $attributes, 'aiheet' => $aiheet));
 		}
 	}
 

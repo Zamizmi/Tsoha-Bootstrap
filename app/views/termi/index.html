@@ -1,26 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Termit</h1>
+<div class="show">
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Termi</th>
+        <th>Englanniksi</th>
+      </tr>
+    </thead>
 
+    <tbody>
+      {% for termi in termit %}
+      <tr>
+        <td><a href="{{base_path}}/termi/{{termi.id}}">{{termi.nimi}}</a></td>
+        <td>{{termi.englanniksi}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 <p>
-  <a href="{{base_path}}/termi/new" class="btn btn-success">Lisää termi</a>
+  <a href="{{base_path}}/termi/new" class="btn btn-primary">Lisää termi</a>
 </p>
-
-<table class="table table-striped table-bordered">
-  <thead>
-    <tr>
-      <th>Termi</th>
-      <th>Englanniksi</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    {% for termi in termit %}
-    <tr>
-      <td><a href="{{base_path}}/termi/{{termi.id}}">{{termi.nimi}}</a></td>
-      <td>{{termi.englanniksi}}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
 {% endblock %}

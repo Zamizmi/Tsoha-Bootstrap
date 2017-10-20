@@ -1,38 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
-{% if errors %}
-<div class="alert alert-danger">
-	<ul>
-		{% for error in errors %}
-		<li>{{error}}</li>
-		<br>
-		{% endfor %}
-	</ul>
-</div>
-{% endif %}
+
 {% import "macros/forms.html" as forms %}
 <h1>{{aihe.nimi}}</h1>
-<ul>
-	<li><strong>Kuvaus:</strong> {{aihe.kuvaus}}</li>
-	<br>
-	<li><strong>Kurssien Lukumäärä:</strong> {{aiheenKurssiaiheidenLkm}}</li>
-	{% for kurssi in kurssit %}
-	<br>
-	<strong><a href="{{base_path}}/kurssi/{{kurssi.id}}">{{kurssi.nimi}}</a></strong>
-	{% endfor %}
-	<br>
-	<li><strong>Termien Lukumäärä:</strong> {{aiheenTermiaiheidenLkm}}</li>
-	{% for termi in termit %}
-	<br>
-	<strong><a href="{{base_path}}/termi/{{termi.id}}">{{termi.nimi}}</a></strong>
-	{% endfor %}
-	<br>
-</ul>
+<div class="show">
+	<ul>
+		<li><strong>Kuvaus:</strong> {{aihe.kuvaus}}</li>
+		<br>
+		<li><strong>Kurssien Lukumäärä:</strong> <span class="badge">{{aiheenKurssiaiheidenLkm}}</span></li>
+		<ul>
+			{% for kurssi in kurssit %}
+			<li><a href="{{base_path}}/kurssi/{{kurssi.id}}">{{kurssi.nimi}}</a></li>
+			{% endfor %}
+		</ul>
+		<br>
+		<ul>
+			<li><strong>Termien Lukumäärä:</strong> <span class="badge">{{aiheenTermiaiheidenLkm}}</span></li>
+			{% for termi in termit %}
+			<li><a href="{{base_path}}/termi/{{termi.id}}">{{termi.nimi}}</a> </li>
+			{% endfor %}
+		</ul>
+	</ul>
+</div>
 <br>
 {{forms.destroy_button("#{base_path}/aihe/#{aihe.id}/destroy")}}
 <br>
 <br>
 <p>
-	<a href="{{base_path}}/aihe/{{aihe.id}}/edit" class="btn btn-default">Muokkaa</a>
+	<a href="{{base_path}}/aihe/{{aihe.id}}/edit" class="btn btn-primary">Muokkaa</a>
 </p>
 {% endblock %}

@@ -1,36 +1,36 @@
 {% extends "base.html" %}
 {% block content %}
-{% if errors %}
-<div class="alert alert-danger">
-  <ul>
-    {% for error in errors %}
-    <li>{{error}}</li>
-    <br>
-    {% endfor %}
-  </ul>
-</div>
-{% endif %}
 <h1>Muokkaa Kurssia {{attributes.nimi}}</h1>
-<form method="post" action="{{base_path}}/kurssi/{{attributes.id}}/edit">
-  <div class="form-group">
-    <label>Kurssin Nimi</label>
-    <input type="text" name="nimi" class="form-control" value="{{attributes.nimi}}">
-  </div>
+<div class="show">
+  <form method="post" action="{{base_path}}/kurssi/{{attributes.id}}/edit">
+    <div class="form-group">
+      <label>Kurssin Nimi</label>
+      <input type="text" name="nimi" class="form-control" value="{{attributes.nimi}}">
+    </div>
 
-  <div class="form-group">
-    <label>Kurssitunnus</label>
-    <input type="text" name="kurssitunnus" class="form-control" value="{{attributes.kurssitunnus}}">
-  </div>
+    <div class="form-group">
+      <label>Kurssitunnus</label>
+      <input type="text" name="kurssitunnus" class="form-control" value="{{attributes.kurssitunnus}}">
+    </div>
 
-  <div class="form-group">
-    <label>Kuvaus</label>
-    <input type="textarea" name="kuvaus" class="form-control" value="{{attributes.kuvaus}}">
-  </div>
+    <div class="form-group">
+      <label>Kuvaus</label>
+      <input type="textarea" name="kuvaus" class="form-control" value="{{attributes.kuvaus}}">
+    </div>
 
-  <div class="form-group">
-    <button type="submit" class="btn btn-primary">Tallenna Muutokset</button>
-  </div>
-</form>
-<p>Ei pysty vielä muuttamaan yhteyksiä aiheisiin.</p>
+    <div class="form-group">
+      <label>Kurssiin Kuuluu Aiheet</label>
+      <select class="form-control" name="aiheet[]" multiple="">
+        {% for aihe in aiheet %}
+        <option value="{{aihe.id}}">{{aihe.nimi}}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Tallenna Muutokset</button>
+    </div>
+  </form>
+</div>
 
 {% endblock %}

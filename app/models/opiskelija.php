@@ -5,6 +5,7 @@ class Opiskelija extends BaseModel{
 
 	public function __construct($attributes){
 		parent::__construct($attributes);
+		$this->validators = array('validate_kayttajatunnus', 'validate_salasana');
 	}
 
 	public static function find($id){
@@ -28,23 +29,31 @@ class Opiskelija extends BaseModel{
 	public function save() {
 		$query = DB::connection() -> prepare('INSERT INTO Opiskelija (kayttajatunnus, salasana) VALUES (:kayttajatunnus, :salasana) RETURNING id');
 		$query -> execute(array('kayttajatunnus' => $this->kayttajatunnus, 'salasana' => $this->salasana));
-			$row = $query->fetch();
-			$this->id = $row['id'];
-		}
+		$row = $query->fetch();
+		$this->id = $row['id'];
+	}
 
-		public static function authenticate($kayttajatunnus, $salasana) {
-			$query = DB::connection()->prepare('SELECT * FROM Opiskelija WHERE kayttajatunnus = :kayttajatunnus AND salasana = :salasana LIMIT 1');
-			$query->execute(array('kayttajatunnus' => $kayttajatunnus, 'salasana' => $salasana));
-			$row = $query->fetch();
-			if($row){
-				$opiskelija = new Opiskelija(array(
-					'id' => $row['id'],
-					'kayttajatunnus' => $row['kayttajatunnus'],
-					'salasana' => $row['salasana']
-				));
-				return $opiskelija;
-			}else{
-				return null;
-			}
+	public static function authenticate($kayttajatunnus, $salasana) {
+		$query = DB::connection()->prepare('SELECT * FROM Opiskelija WHERE kayttajatunnus = :kayttajatunnus AND salasana = :salasana LIMIT 1');
+		$query->execute(array('kayttajatunnus' => $kayttajatunnus, 'salasana' => $salasana));
+		$row = $query->fetch();
+		if($row){
+			$opiskelija = new Opiskelija(array(
+				'id' => $row['id'],
+				'kayttajatunnus' => $row['kayttajatunnus'],
+				'salasana' => $row['salasana']
+			));
+			return $opiskelija;
+		}else{
+			return null;
 		}
 	}
+
+	public function validate_kayttajatunnus() {
+		return parent::validate_string_length('kayttajatunnus', $this->kayttajatunnus, 2, 50);
+	}
+
+	public function validate_salasana() {
+		return parent::validate_string_length('salasana', $this->salasana, 6, 50);
+	}
+}
