@@ -5,11 +5,6 @@ Yleisiä linkkejä:
 * [Linkki sovellukseeni](https://saklindq.users.cs.helsinki.fi/tsoha/)
 * [Linkki dokumentaatiooni](https://github.com/Zamizmi/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf)
 
-* [Linkki Typographiaan](https://getbootstrap.com/docs/3.3/css/#type)
-* [Linkki Tauluihin](https://getbootstrap.com/docs/3.3/css/#tables)
-* [Linkki Formeihin](https://getbootstrap.com/docs/3.3/css/#forms)
-* [Linkki Nappuloihin](https://getbootstrap.com/docs/3.3/css/#buttons)
-
 Sivujen linkkejä:
 * [Linkki kursseihin](http://saklindq.users.cs.helsinki.fi/tsoha/kurssi)
 * [Linkki Aiheisiin](http://saklindq.users.cs.helsinki.fi/tsoha/aihe)
